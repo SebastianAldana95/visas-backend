@@ -23,7 +23,8 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
 
         // CORS
-        \Barryvdh\Cors\HandleCors::class,
+        // \Barryvdh\Cors\HandleCors::class,
+
     ];
 
     /**
@@ -45,6 +46,7 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+
         ],
     ];
 
