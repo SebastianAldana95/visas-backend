@@ -25,6 +25,9 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('ventas', VentaController::class);
 });*/
 
+Route::post('/auth/login', [TokensController::class, 'login']);
+Route::post('register', [RegisterController::class, 'apiCreate']);
+
 Route::group(['middleware' => ['jwt.auth']], function(){
     // Route::resource('ventas', VentaController::class);
     Route::get('ventas', [VentaController::class, 'index']);
@@ -33,8 +36,4 @@ Route::group(['middleware' => ['jwt.auth']], function(){
     Route::get('auth/logout', [TokensController::class, 'logout']);
 });
 
-Route::group(['middleware' => []], function(){
-    Route::post('/auth/login', [TokensController::class, 'login']);
-    Route::post('register', [RegisterController::class, 'apiCreate']);
-});
 
