@@ -6,14 +6,16 @@
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-jet-application-mark class="block h-9 w-auto" />
+                        <!--<x-jet-application-mark class="block h-9 w-auto" src="resources\img\logo-visas.png" />-->
+                        <img class="block h-9 w-auto"
+                         src="https://visascontinental.com/wp-content/uploads/2020/08/LOGOS-VISAS-CONTINENTAL_Mesa-de-trabajo-1-1-e1597277100527.png">
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('Inicio') }}
                     </x-jet-nav-link>
                 </div>
 
@@ -26,7 +28,7 @@
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('usuarios') }}" :active="request()->routeIs('usuarios')">
-                        {{ __('usuarios') }}
+                        {{ __('Usuarios') }}
                     </x-jet-nav-link>
                 </div>
 
@@ -154,7 +156,7 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+                {{ __('Inicio') }}
             </x-jet-responsive-nav-link>
         </div>
 
@@ -168,7 +170,7 @@
 
         <div class="pt-2 pb-3 space-y-1">
             <x-jet-responsive-nav-link href="{{ route('usuarios') }}" :active="request()->routeIs('dashboard')">
-                {{ __('usuarios') }}
+                {{ __('Usuarios') }}
             </x-jet-responsive-nav-link>
         </div>
 

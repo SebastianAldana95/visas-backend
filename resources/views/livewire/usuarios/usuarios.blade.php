@@ -27,7 +27,7 @@
                     <th class="px-4 py-2">Correo</th>
                     <th class="px-4 py-2">Identificacion</th>
                     <th class="px-4 py-2">Telefono</th>
-                    <th class="px-4 py-2">Action</th>
+                    <th class="px-4 py-2">Accion</th>
                 </tr>
                 </thead>
                 <tbody>
