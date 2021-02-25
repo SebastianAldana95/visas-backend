@@ -13,11 +13,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/*Route::get('/', function () {
-    return view('welcome');
+Route::get('/', function () {
+    return view('auth.login');
 });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-*/
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    // Route::resource('ventas', App\Http\Controllers\VentaController::class);
+    // Route::get('ventas', App\Http\Livewire\Ventas::class);
+    Route::get('ventas', App\Http\Livewire\Ventas::class)->name('ventas');
+    Route::get('usuarios', App\Http\Livewire\Usuarios::class)->name('usuarios');
+    Route::get('pdfVentas', [App\Http\Controllers\PDFController::class, 'PDF'])->name('descargarPDF');
+    Route::get('VentasAllPdf', [App\Http\Controllers\PDFController::class, 'allSalesPDF'])->name('descargarAllPdf');
+    Route::get('pdfVentas/{id}', [App\Http\Controllers\PDFController::class, 'userSalePdf'])->name('detail_sale_user_pdf');
+
+});
+

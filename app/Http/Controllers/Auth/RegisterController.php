@@ -55,8 +55,8 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'cedula' => ['required', 'string', 'max:12'],
-            'telefono' => ['required']
+            'identification' => ['required', 'string', 'max:12'],
+            'phone' => ['required']
         ]);
     }
 
@@ -71,12 +71,12 @@ class RegisterController extends Controller
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'cedula' => $data['cedula'],
-            'telefono' => $data['telefono'],
+            'identification' => $data['identification'],
+            'phone' => $data['phone'],
             'password' => Hash::make($data['password']),
         ]);
 
-        $user->roles()->attach(Role::where('name', 'consultor')->first());
+        // $user->roles()->attach(Role::where('name', 'Consultor')->first());
         return $user;
     }
 
@@ -86,11 +86,11 @@ class RegisterController extends Controller
             $user = User::create([
                 'name' => $request['name'],
                 'email' => $request['email'],
-                'cedula' => $request['cedula'],
-                'telefono' => $request['telefono'],
+                'identification' => $request['identification'],
+                'phone' => $request['phone'],
                 'password' => Hash::make($request['password']),
             ]);
-            $user->roles()->attach(Role::where('name', 'consultor')->first());
+            // $user->roles()->attach(Role::where('name', 'Consultor')->first());
             return response()->json([
                 'success' => true,
                 'user' => $user
