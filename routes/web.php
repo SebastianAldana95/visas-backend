@@ -33,6 +33,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('pdfVentas', [App\Http\Controllers\PDFController::class, 'PDF'])->name('descargarPDF');
     Route::get('VentasAllPdf', [App\Http\Controllers\PDFController::class, 'allSalesPDF'])->name('descargarAllPdf');
     Route::get('pdfVentas/{id}', [App\Http\Controllers\PDFController::class, 'userSalePdf'])->name('detail_sale_user_pdf');
-
+    Route::get('pdfComprobante/{id}', [App\Http\Controllers\PDFController::class, 'invoicePDF'])->name('invoice_pdf');
 });
 

@@ -1,15 +1,11 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('¡Bienvenido!') }}
-        </h2>
-    </x-slot>
+    
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                
-            </div>
-        </div>
-    </div>
+    <section class="bg-cover bg-no-repeat bg-center bg-fixed bg-opacity-25" style="background-image: url(https://image.freepik.com/foto-gratis/pasaporte-encima-mapa-mundo_1232-1124.jpg)">
+        <br><br><br><br><br>
+        <br><br><br><br><br>
+        <p class="text-8xl text-white text-center font-black">¡Bienvenido!</p>
+        <br><br><br><br><br>
+        <br><br><br><br><br>
+    </section>
 </x-app-layout>

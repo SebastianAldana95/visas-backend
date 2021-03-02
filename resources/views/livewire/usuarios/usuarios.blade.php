@@ -1,5 +1,6 @@
 <x-slot name="header">
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+    <h2 class="font-semibold text-xl text-gray-800 leading-tight
+            text-center font-black ">
         Administrar Usuarios
     </h2>
 </x-slot>
@@ -19,7 +20,7 @@
                 @if($isOpen)
                     @include('livewire.usuarios.create')
                 @endif
-            <table class="table-fixed w-full">
+            <table class="table-auto w-full">
                 <thead>
                 <tr class="bg-gray-100">
                     <th class="px-4 py-2 w-20">Id.</th>

@@ -28,5 +28,15 @@ class PDFController extends Controller
         return $pdf->setPaper('a4', 'landscape')->stream(now()->toDateTimeString());
     }
 
+    public function invoicePDF($id) {
+        $sales = Sale::where('id', '=', $id)->get();
+        /*$path = '/img/LOGOS-VISAS.png';
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $logo = 'data:image/' . $type . ';base64,' . base64_encode($data);*/
+        $pdf = PDF::loadView('livewire.ventas.invoice', compact('sales'));
+        return $pdf->setPaper('a4')->stream(now()->toDateTimeString());
+    }
+
 
 }
