@@ -17,7 +17,8 @@ class Ventas extends Component
 
     public function render()
     {
-        $this->sales = Sale::with(['salesUsers', 'service'])->get();
+        // $this->sales = Sale::with(['salesUsers', 'service'])->get();
+        $this->sales = Auth::user()->sales()->get();
         $this->zone = Auth::user()->zone()->get()->first();
         $this->services = Service::all();
         return view('livewire.ventas.ventas');
