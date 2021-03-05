@@ -20,37 +20,71 @@
             <p style="text-align: right">Cra 11B # 99 - 25 Bogotá, Colombia</p>
         </header>
         <table class="table-auto" style="padding-left: 4px">
-        @foreach($sales as $sale)
-            <thead>
-            <tr>
-                <th scope="col">Cliente</th>
-                <th scope="row">{{ $sale->name }}</th>
-            </tr>
-            </thead>
-            <tbody>
+            @if(array($sales))
+                @foreach($sales as $sale)
+                    <thead>
+                    <tr>
+                        <th scope="col">Cliente</th>
+                        <th scope="row">{{ $sale->name }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
                     <tr>
                         <td>C.C </td>
                         <td>{{ $sale->identification }}</td>
-                        
                     </tr>
+
                     <tr>
                         <td>Correo: </td>
                         <td>{{ $sale->email }}</td>
                     </tr>
+
                     <tr>
-                        <td>Vendedor: </td>
-                        <td>{{ $sale->amount }}</td>
+                        <td>Fecha: </td>
+                        <td>{{ $sale->date }}</td>
                     </tr>
+
+                    <tr>
+                        <td>Ciudad:</td>
+                        <td>{{ auth()->user()->zone['name'] }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Nombre del vendedor:</td>
+                        <td>{{ auth()->user()->name }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Codigo: </td>
+                        <td>{{ $sale->id }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Descripcion: </td>
+                        <td>{{ $sale->pivot->description }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Cantidad: </td>
+                        <td>{{ $sale->quantity }}</td>
+                    </tr>
+
                     <tr>
                         <td>Servicio:</td>
-                        <td>{{ $sale->service }}</td>
+                        <td>{{ $sale->service['name']}}</td>
                     </tr>
+
                     <tr>
-                        <td>Zona:</td>
-                        <td>{{ $sale->zone }}</td>
+                        <td>Total:</td>
+                        <td>${{ $sale->pivot->total }}.000</td>
                     </tr>
-            </tbody>
-            @endforeach
+
+                    </tbody>
+                @endforeach
+            @else
+                <p>Nada para mostrar</p>
+            @endif
         </table>
     </div>
 </body>

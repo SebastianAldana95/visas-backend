@@ -34,18 +34,19 @@
                         </div>
                         <div class="mb-4">
                             <label for="exampleFormControlInput2" class="block text-gray-700 text-sm font-bold mb-2">Cantidad:</label>
-                            <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exampleFormControlInput2" wire:model="amount" placeholder="Cantidad"></textarea>
-                            @error('amount') <span class="text-red-500">{{ $message }}</span>@enderror
+                            <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exampleFormControlInput2" wire:model="quantity" placeholder="Cantidad"></textarea>
+                            @error('quantity') <span class="text-red-500">{{ $message }}</span>@enderror
                         </div>
                         <div class="mb-4">
-                            <label for="exampleFormControlInput2" class="block text-gray-700 text-sm font-bold mb-2">Servicio:</label>
-                            <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exampleFormControlInput2" wire:model="service" placeholder="Servicio"></textarea>
-                            @error('service') <span class="text-red-500">{{ $message }}</span>@enderror
-                        </div>
-                        <div class="mb-4">
-                            <label for="exampleFormControlInput2" class="block text-gray-700 text-sm font-bold mb-2">Zona:</label>
-                            <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exampleFormControlInput2" wire:model="zone" placeholder="Zona"></textarea>
-                            @error('zone') <span class="text-red-500">{{ $message }}</span>@enderror
+                            <div class="mb-8">
+                                <label class="inline-block w-32 font-bold">Servicio:</label>
+                                <select name="service_id" wire:model="service_id" class="border rounded shadow p-2 bg-white" required>
+                                    <option value='service_id'>Seleccione un servicio</option>
+                                    @foreach($services as $service)
+                                        <option value={{ $service->id }}>{{ $service->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                         <!--Colocar los demas campos del formulario-->
                     </div>

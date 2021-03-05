@@ -29,7 +29,8 @@ class User extends Authenticatable
         'email',
         'identification',
         'phone',
-        'password'
+        'password',
+        'zone_id',
     ];
 
     /**
@@ -62,8 +63,19 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function sales(){
+    /*public function sales(){
         return $this->belongsToMany(Sale::class);
+    }*/
+
+    public function zone() {
+        return $this->belongsTo(Zone::class);
+    }
+
+    public function sales() {
+        return $this->belongsToMany(Sale::class, 'sale_user')
+            ->withPivot(['user_id'])
+            ->withPivot('total')
+            ->withPivot('description');
     }
 
 }

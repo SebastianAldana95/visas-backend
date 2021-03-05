@@ -19,18 +19,36 @@
                         </div>
                         <div class="mb-4">
                             <label for="exampleFormControlInput2" class="block text-gray-700 text-sm font-bold mb-2">Correo electrónico:</label>
-                            <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exampleFormControlInput2" wire:model="email" placeholder="Email"></textarea>
+                            <input type="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exampleFormControlInput2" wire:model="email" placeholder="Email">
                             @error('email') <span class="text-red-500">{{ $message }}</span>@enderror
                         </div>
                         <div class="mb-4">
                             <label for="exampleFormControlInput2" class="block text-gray-700 text-sm font-bold mb-2">Cedula:</label>
-                            <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exampleFormControlInput2" wire:model="identification" placeholder="Cedula"></textarea>
+                            <input type="number" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exampleFormControlInput2" wire:model="identification" placeholder="Cedula">
                             @error('identification') <span class="text-red-500">{{ $message }}</span>@enderror
                         </div>
                         <div class="mb-4">
                             <label for="exampleFormControlInput2" class="block text-gray-700 text-sm font-bold mb-2">Telefono:</label>
-                            <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exampleFormControlInput2" wire:model="phone" placeholder="Telefono"></textarea>
+                            <input type="number" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exampleFormControlInput2" wire:model="phone" placeholder="Telefono">
                             @error('phone') <span class="text-red-500">{{ $message }}</span>@enderror
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="exampleFormControlInput2" class="block text-gray-700 text-sm font-bold mb-2">Contraseña:</label>
+                            <input type="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exampleFormControlInput2" wire:model="password" placeholder="Password">
+                            @error('password') <span class="text-red-500">{{ $message }}</span>@enderror
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="mb-8">
+                                <label class="inline-block w-32 font-bold">Zona:</label>
+                                <select name="zone_id" wire:model="zone_id" class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none" required>
+                                    <option value='zone_id'>Opciones</option>
+                                    @foreach($zones as $zone)
+                                        <option value={{ $zone->id }}>{{ $zone->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                         <!--Colocar los demas campos del formulario-->
                     </div>

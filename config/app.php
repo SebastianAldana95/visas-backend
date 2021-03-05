@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'America/Bogota',
 
     /*
     |--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'es',
 
     /*
     |--------------------------------------------------------------------------
@@ -180,8 +180,12 @@ return [
 
         // CORS
         // Barryvdh\Cors\ServiceProvider::class,
+
         // PDF
         Barryvdh\DomPDF\ServiceProvider::class,
+
+        // Provider language spanish
+        Laraveles\Spanish\SpanishServiceProvider::class,
 
     ],
 

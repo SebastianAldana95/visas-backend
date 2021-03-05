@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use App\Models\Sale;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use PhpParser\Node\Expr\AssignOp\Concat;
 
 class PDFController extends Controller
 {
     public function PDF() {
-        $sales = Sale::where('user_id', '=', Auth::id())->get();
+        $sales = Auth::user()->sales()->get();
         $pdf = PDF::loadView('livewire.ventas.ventapdf', compact('sales'));
          return $pdf->setPaper('a4', 'landscape')->stream(now()->toDateTimeString());
     }
@@ -23,18 +25,23 @@ class PDFController extends Controller
     }
 
     public function userSalePdf($id) {
-        $sales = Sale::where('user_id', '=', $id)->get();
+        $sales = User::find($id)->sales()->get();
         $pdf = PDF::loadView('livewire.ventas.ventapdf', compact('sales'));
         return $pdf->setPaper('a4', 'landscape')->stream(now()->toDateTimeString());
     }
 
     public function invoicePDF($id) {
-        $sales = Sale::where('id', '=', $id)->get();
-        /*$path = '/img/LOGOS-VISAS.png';
-        $type = pathinfo($path, PATHINFO_EXTENSION);
-        $data = file_get_contents($path);
-        $logo = 'data:image/' . $type . ';base64,' . base64_encode($data);*/
+
+        $sales = Auth::user()->sales()->where('sale_id', $id)->get();
         $pdf = PDF::loadView('livewire.ventas.invoice', compact('sales'));
+
+        /*Mail::send('livewire.ventas.invoice', [$sales], function ($sales) use ($pdf){
+            $sales->from(auth()->user()->email, auth()->user()->name);
+            $sales->to('juancamilop@gmail.com')->subject('Comprobante de Pago');
+            // $message->attachData($pdf->output(), 'comprobante.pdf');
+            $sales->attachData($pdf, 'comprobante.pdf');
+        });*/
+
         return $pdf->setPaper('a4')->stream(now()->toDateTimeString());
     }
 

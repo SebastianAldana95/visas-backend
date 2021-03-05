@@ -49,6 +49,9 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
+
+    public $zones;
+
     protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -56,7 +59,8 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'identification' => ['required', 'string', 'max:12'],
-            'phone' => ['required']
+            'phone' => ['required'],
+            'zone_id' => ['required'],
         ]);
     }
 
@@ -74,6 +78,7 @@ class RegisterController extends Controller
             'identification' => $data['identification'],
             'phone' => $data['phone'],
             'password' => Hash::make($data['password']),
+            'zone_id' => $data['zone_id'],
         ]);
 
         // $user->roles()->attach(Role::where('name', 'Consultor')->first());
@@ -89,6 +94,7 @@ class RegisterController extends Controller
                 'identification' => $request['identification'],
                 'phone' => $request['phone'],
                 'password' => Hash::make($request['password']),
+                'zone_id' => $request['zone_id'],
             ]);
             // $user->roles()->attach(Role::where('name', 'Consultor')->first());
             return response()->json([

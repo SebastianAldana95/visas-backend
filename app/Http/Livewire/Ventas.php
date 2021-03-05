@@ -3,21 +3,23 @@
 namespace App\Http\Livewire;
 
 use App\Models\Sale;
+use App\Models\Service;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Ventas extends Component
 {
-    public $sales, $date, $name, $identification, $email, $amount, $service, $zone ,$sale_id;
+    public $sales, $date, $name, $identification, $email, $quantity, $service_id, $sale_id;
     public $isOpen = 0;
-
-    // $user_id = auth()->user()->getAuthIdentifier();
-    // Venta::where('user_id', auth()->user()->id)
+    public $zone;
+    public $services=[];
+    public $total=0;
 
     public function render()
     {
-        // $ventas = Venta::where('user_id', '=', Auth::id())->get()->toArray();
-        $this->sales = Sale::where('user_id', '=', Auth::id())->get();
+        $this->sales = Sale::with(['salesUsers', 'service'])->get();
+        $this->zone = Auth::user()->zone()->get()->first();
+        $this->services = Service::all();
         return view('livewire.ventas.ventas');
     }
 
@@ -42,9 +44,8 @@ class Ventas extends Component
         $this->name = '';
         $this->identification = '';
         $this->email = '';
-        $this->amount = '';
-        $this->service = '';
-        $this->zone = '';
+        $this->quantity = '';
+        $this->service_id = '';
         $this->sale_id = '';
     }
 
@@ -55,24 +56,21 @@ class Ventas extends Component
             'name' => 'required',
             'identification' => 'required',
             'email' => 'required',
-            'amount' => 'required',
-            'service' => 'required',
-            'zone' => 'required',
+            'quantity' => 'required',
+            'service_id' => 'required',
         ]);
 
-        $user = auth()->user();
-        $user_id = $user->id;
-
-        Sale::updateOrCreate(['id' => $this->sale_id], [
+        $sale = Sale::updateOrCreate(['id' => $this->sale_id], [
             'date' => $this->date,
             'name' => $this->name,
             'identification' => $this->identification,
             'email' => $this->email,
-            'amount' => $this->amount,
-            'service' => $this->service,
-            'zone' => $this->zone,
-            'user_id' => $user_id
+            'quantity' => $this->quantity,
+            'service_id' => $this->service_id,
         ]);
+        // $sale->salesUsers()->sync(auth()->user()->getAuthIdentifier());
+        $this->total = $sale->quantity * $sale->service['price'];
+        $sale->salesUsers()->attach(auth()->user()->getAuthIdentifier(), ['total' => $this->total]);
 
         session()->flash('message',
             $this->sale_id ? 'Venta actualizada correctamente' : 'Venta Creada Correctamente.');
@@ -84,21 +82,20 @@ class Ventas extends Component
     public function edit($id)
     {
         $sale = Sale::findOrFail($id);
-        $this->id = $id;
+        $this->sale_id = $id;
         $this->date = $sale->date;
         $this->name = $sale->name;
         $this->identification = $sale->identification;
         $this->email = $sale->email;
-        $this->amount = $sale->amount;
-        $this->service = $sale->service;
-        $this->zone = $sale->zone;
+        $this->quantity = $sale->quantity;
+        $this->service_id = $sale->service_id;
 
         $this->openModal();
     }
 
     public function delete($id)
     {
-        Sale::find($id)->delete();
+        Sale::findOrFail($id)->delete();
         session()->flash('message', 'Venta Eliminada Correctamente.');
     }
 
