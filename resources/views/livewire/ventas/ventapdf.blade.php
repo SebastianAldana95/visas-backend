@@ -38,9 +38,8 @@
                         <td>{{ $sale->name }}</td>
                         <td>{{ $sale->identification }}</td>
                         <td>{{ $sale->email }}</td>
-                        <td>{{ $sale->amount }}</td>
-                        <td>{{ $sale->service }}</td>
-                        <td>{{ $sale->zone }}</td>
+                        <td>{{ $sale->quantity }}</td>
+                        <td>{{ $sale->service['name'] }}</td>
                     </tr>
             @endforeach
             </tbody>

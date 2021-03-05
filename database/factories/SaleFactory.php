@@ -2,18 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
+use App\Models\Sale;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
-class UserFactory extends Factory
+class SaleFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = User::class;
+    protected $model = Sale::class;
 
     /**
      * Define the model's default state.
@@ -23,12 +22,12 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
+            'date' => $this->faker->date(),
             'name' => $this->faker->name,
-            'email' => $this->faker->unique()->safeEmail,
             'identification' => $this->faker->uuid,
-            'phone' => $this->faker->phoneNumber,
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'zone_id' => rand(1, 4),
+            'email' => $this->faker->unique()->safeEmail,
+            'quantity' => rand(1, 8),
+            'service_id' => rand(1, 5)
         ];
     }
 }

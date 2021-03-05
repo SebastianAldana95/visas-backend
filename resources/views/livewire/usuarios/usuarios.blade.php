@@ -8,7 +8,7 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
             @if (session()->has('message'))
-                <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3" role="alert">
+                <div class="bg-teal-lightest border-t-4 border-teal rounded-b text-teal-darkest px-4 py-3 shadow-md my-2" role="alert">
                     <div class="flex">
                         <div>
                             <p class="text-sm">{{ session('message') }}</p>
@@ -16,7 +16,7 @@
                     </div>
                 </div>
             @endif
-           <!--<button wire:click="create()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3">Crear Usuario</button>-->
+           <button wire:click="create()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3">Crear Usuario</button>
                 @if($isOpen)
                     @include('livewire.usuarios.create')
                 @endif
@@ -28,6 +28,7 @@
                     <th class="px-4 py-2">Correo</th>
                     <th class="px-4 py-2">Identificacion</th>
                     <th class="px-4 py-2">Telefono</th>
+                    <th class="px-4 py-2">Zona</th>
                     <th class="px-4 py-2">Accion</th>
                 </tr>
                 </thead>
@@ -39,12 +40,12 @@
                         <td class="border px-4 py-2">{{ $user->email }}</td>
                         <td class="border px-4 py-2">{{ $user->identification }}</td>
                         <td class="border px-4 py-2">{{ $user->phone }}</td>
-
+                        <td class="border px-4 py-2">{{ $user->zone->name }}</td>
 
                         <td class="border px-3 py-5">
                             <!--<button wire:click="edit({{ $user->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Editar</button>-->
                             <button wire:click="delete({{ $user->id }})" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Eliminar</button>
-                            <a href="{{ route('detail_sale_user_pdf',$user->id )}}" target="_blank" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Reporte</a>
+                            <a href="{{ route('detail_sale_user_pdf',$user->id )}}" target="_blank" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Reporte</a>
                         </td>
                     </tr>
                 @endforeach

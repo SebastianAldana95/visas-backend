@@ -9,11 +9,16 @@ class Sale extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'date', 'name', 'identification', 'email', 'amount', 'service', 'zone', 'user_id',
+        'date', 'name', 'identification', 'email', 'quantity', 'service_id'
     ];
 
-    public function users(){
-        return $this->belongsTo(User::class);
+    public function service(){
+        return $this->belongsTo(Service::class);
+    }
+
+    public function salesUsers() {
+        return $this->belongsToMany(User::class, 'sale_user')
+            ->withPivot('total');
     }
 
 }

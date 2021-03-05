@@ -30,6 +30,17 @@
             </div>
 
             <div class="mt-4">
+                <x-jet-label for="zone_id" value="{{ __('Zona') }}" />
+                <select name="zone_id" id="zone_id" class="form-select" aria-label="Default select example" required>
+                    <option selected>Seleccione una zona</option>
+                    <option value="1">Bogota</option>
+                    <option value="2">Medellin</option>
+                    <option value="3">Pereira</option>
+                    <option value="4">Santander</option>
+                </select>
+            </div>
+
+            <div class="mt-4">
                 <x-jet-label for="password" value="{{ __('Contraseña') }}" />
                 <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
             </div>
