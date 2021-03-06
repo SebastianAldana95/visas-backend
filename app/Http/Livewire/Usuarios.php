@@ -36,6 +36,7 @@ class Usuarios extends Component
             ->orWhere('phone', 'LIKE', "%{$this->search}%")
             ->orWhere('email', 'LIKE', "%{$this->search}%")
             ->with('zone')
+            ->with('role')
             ->latest()
             ->paginate($this->perPage);
         $this->zones = Zone::all();

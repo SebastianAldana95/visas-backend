@@ -34,6 +34,7 @@ class Ventas extends Component
             ->orWhere('date', 'LIKE', "%{$this->search}%")
             ->orWhere('identification', 'LIKE', "%{$this->search}%")
             ->orWhere('email', 'LIKE', "%{$this->search}%")
+            ->with('service')
             ->latest()
             ->paginate($this->perPage);
         $this->services = Service::all();
