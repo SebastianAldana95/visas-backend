@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/*DB::listen(function ($query){
+   echo "<pre>{$query->sql}</pre>";
+});*/
+
 Route::get('/', function () {
     return view('auth.login');
 });
@@ -32,5 +36,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('VentasAllPdf', [App\Http\Controllers\PDFController::class, 'allSalesPDF'])->name('descargarAllPdf');
     Route::get('pdfVentas/{id}', [App\Http\Controllers\PDFController::class, 'userSalePdf'])->name('detail_sale_user_pdf');
     Route::get('pdfComprobante/{id}/{email}/{name}', [App\Http\Controllers\PDFController::class, 'invoicePDF'])->name('invoice_pdf');
+    Route::get('pdfDetalle/{id}', [App\Http\Controllers\PDFController::class, 'detailSale'])->name('invoice_pdf_detalle');
 });
 

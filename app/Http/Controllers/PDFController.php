@@ -27,14 +27,21 @@ class PDFController extends Controller
 
     public function userSalePdf($id) {
         $sales = User::find($id)->sales()->get();
-        $pdf = PDF::loadView('livewire.ventas.invoice', compact('sales'));
-        return $pdf->setPaper('a4', 'landscape')->stream(now()->toDateTimeString());
+        $user = User::where('id', $id)
+            ->with('zone')
+            ->get();
+        $pdf = PDF::loadView('livewire.ventas.invoice', ['sales' => $sales, 'user' => $user]);
+        return $pdf->setPaper('letter')->stream(now()->toDateTimeString());
     }
 
     public function invoicePDF($id, $email, $name) {
 
         $sales = Auth::user()->sales()->where('sale_id', $id)->get();
-        $pdf = PDF::loadView('livewire.ventas.invoice', ['sales' => $sales]);
+        $user = User::where('id', auth()->id())
+            ->with('zone')
+            ->get();
+
+        $pdf = PDF::loadView('livewire.ventas.invoice', ['sales' => $sales, 'user' => $user]);
         $date = Carbon::now();
         $date->format('Y-m-d');
 
@@ -45,6 +52,12 @@ class PDFController extends Controller
         });
 
         return $pdf->setPaper('a4')->stream(now()->toDateTimeString());
+    }
+
+    public function detailSale($id) {
+        $sales = Sale::with('salesUsers')->where('id', '=', $id)->get();
+        $pdf = PDF::loadView('livewire.ventas.detail_invoice', ['sales' => $sales]);
+        return $pdf->setPaper('letter')->stream(now()->toDateTimeString());
     }
 
 

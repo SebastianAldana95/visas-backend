@@ -4,6 +4,8 @@ namespace App\Http\Livewire;
 
 use App\Models\Sale;
 use App\Models\Service;
+use App\Models\User;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -27,19 +29,32 @@ class Ventas extends Component
 
     public function render()
     {
-        $sales = Sale::whereHas('service', function ($query) {
-            $query->where('name', 'LIKE', "%{$this->search}%");
-        })
-            ->orWhere('name', 'LIKE', "%{$this->search}%")
-            ->orWhere('date', 'LIKE', "%{$this->search}%")
-            ->orWhere('identification', 'LIKE', "%{$this->search}%")
-            ->orWhere('email', 'LIKE', "%{$this->search}%")
-            ->with('service')
-            ->latest()
-            ->paginate($this->perPage);
-        $this->services = Service::all();
+        if (auth()->user()->hasRoles(['administrador']))
+        {
+            $sales = Sale::whereHas('service', function ($query) {
+                $query->where('name', 'LIKE', "%{$this->search}%");
+            })
+                ->orWhere('name', 'LIKE', "%{$this->search}%")
+                ->orWhere('date', 'LIKE', "%{$this->search}%")
+                ->orWhere('identification', 'LIKE', "%{$this->search}%")
+                ->orWhere('email', 'LIKE', "%{$this->search}%")
+                ->with('service')
+                ->with('salesUsers')
+                ->latest()
+                ->paginate($this->perPage);
+            $this->services = Service::all();
 
-        return view('livewire.ventas.ventas', ['sales' => $sales]);
+            return view('livewire.ventas.ventas', ['sales' => $sales]);
+        } else {
+
+            $sales = Auth::user()->sales()
+                ->whereHas('service', function ($query) {
+                    $query->where('name', 'LIKE', "%{$this->search}%");
+                })
+                ->latest()
+                ->paginate($this->perPage);
+            return view('livewire.ventas.ventas', ['sales' => $sales]);
+        }
 
     }
 

@@ -22,7 +22,7 @@
         <table class="table-auto" style="padding-left: 4px">
             @if(array($sales))
                 @foreach($sales as $sale)
-                    @foreach($user as $usr)
+                    @foreach($sale->salesUsers as $user)
                         <thead>
                             <tr>
                                 <th scope="col">Cliente</th>
@@ -47,12 +47,12 @@
 
                             <tr>
                                 <td>Ciudad:</td>
-                                <td>{{ $usr->zone->name }}</td>
+                                <td>{{ $user->zone->name }}</td>
                             </tr>
 
                             <tr>
                                 <td>Nombre del vendedor:</td>
-                                <td>{{ $usr->name }}</td>
+                                <td>{{ $user->name }}</td>
                             </tr>
 
                             <tr>
@@ -62,7 +62,7 @@
 
                             <tr>
                                 <td>Descripcion: </td>
-                                <td>{{ $sale->pivot->description }}</td>
+                                <td>{{ $user->pivot->description }}</td>
                             </tr>
 
                             <tr>
@@ -77,7 +77,7 @@
 
                             <tr>
                                 <td>Total:</td>
-                                <td>${{ number_format($sale->pivot->total, 3) }}</td>
+                                <td>${{ number_format($user->pivot->total, 3) }}</td>
                             </tr>
                         </tbody>
                     @endforeach
