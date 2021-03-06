@@ -29,6 +29,7 @@ class UserFactory extends Factory
             'phone' => $this->faker->phoneNumber,
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'zone_id' => rand(1, 4),
+            'role_id' => rand(2,2)
         ];
     }
 }

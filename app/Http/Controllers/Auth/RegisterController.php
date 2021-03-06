@@ -79,9 +79,9 @@ class RegisterController extends Controller
             'phone' => $data['phone'],
             'password' => Hash::make($data['password']),
             'zone_id' => $data['zone_id'],
+            'role_id' => 2,
         ]);
 
-        // $user->roles()->attach(Role::where('name', 'Consultor')->first());
         return $user;
     }
 
@@ -95,6 +95,7 @@ class RegisterController extends Controller
                 'phone' => $request['phone'],
                 'password' => Hash::make($request['password']),
                 'zone_id' => $request['zone_id'],
+                'role_id' => 2,
             ]);
             // $user->roles()->attach(Role::where('name', 'Consultor')->first());
             return response()->json([

@@ -17,48 +17,81 @@
                 </div>
             @endif
                 <button wire:click="create()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3">Crear Venta</button>
-                <a href="{{ route('descargarPDF') }}" target="_blank" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Reporte Ventas</a>
-                <a href="{{ route('descargarAllPdf') }}" target="_blank" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Reporte Todas las Ventas</a>
-            @if($isOpen)
-                @include('livewire.ventas.create')
-            @endif
-            <table class="table-auto w-50">
-                <thead>
-                <tr class="bg-gray-100">
-                    <th class="px-4 py-2 w-20">Id.</th>
-                    <th class="px-4 py-2">Fecha</th>
-                    <th class="px-4 py-2">Nombre</th>
-                    <th class="px-4 py-2">Identificacion</th>
-                    <th class="px-4 py-2">Correo</th>
-                    <th class="px-4 py-2">Cantidad</th>
-                    <th class="px-4 py-2">Servicio</th>
-                    <th class="px-4 py-2">Zona</th>
-                    <th class="px-4 py-2">Accion</th>
-                </tr>
-                </thead>
-                <tbody>
-                    @if($sales !== null)
-                        @foreach($sales as $sale)
-                            <tr>
-                                <td class="border px-4 py-2">{{ $sale->id }}</td>
-                                <td class="border px-4 py-2">{{ $sale->date }}</td>
-                                <td class="border px-4 py-2">{{ $sale->name }}</td>
-                                <td class="border px-4 py-2">{{ $sale->identification }}</td>
-                                <td class="border px-4 py-2">{{ $sale->email }}</td>
-                                <td class="border px-4 py-2">{{ $sale->quantity }}</td>
-                                <td class="border px-4 py-2">{{ $sale->service->name }}</td>
-                                <td class="border px-4 py-2">{{ $zone['name'] }}</td>
-
-                                <td class="border px-4 py-2">
-                                    <button wire:click="edit({{ $sale->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Editar</button>
-                                    <button wire:click="delete({{ $sale->id }})" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Eliminar</button>
-                                    <a href="{{ route('invoice_pdf', $sale->id) }}" target="_blank" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Descargar PDF</a>
-                                </td>
-                            </tr>
-                        @endforeach
+                @if(auth()->user()->hasRoles(['consultor']))
+                    <a href="{{ route('descargarPDF') }}" target="_blank" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Reporte Ventas</a>
+                @endif
+                <!--@if(auth()->user()->hasRoles(['administrador']))
+                    <a href="{{ route('descargarAllPdf') }}" target="_blank" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Reporte Todas las Ventas</a>
+                @endif-->
+                @if($isOpen)
+                    @include('livewire.ventas.create')
+                @endif
+                <div class="flex">
+                    @if($search !== '')
+                        <button wire:click="clear" class="text-gray-500 py-2 px-4 shadow-sm mt-1 block rounded-md mr-2">X</button>
                     @endif
-                </tbody>
+                    <input wire:model="search" class="rounded-md shadow-sm mt-1 block w-full" type="text" placeholder="Buscar Venta...">
+                    <select wire:model="perPage" class="rounded-md shadow-sm mt-1 block text-gray-500 text-sm ml-6">
+                        <option value="5">5 por página</option>
+                        <option value="10">10 por página</option>
+                        <option value="15">15 por página</option>
+                        <option value="20">20 por página</option>
+                    </select>
+                </div>
+            <table class="table-auto w-full">
+                @if($sales->count())
+                    <thead>
+                    <tr class="bg-gray-100">
+                        <th class="px-4 py-2 w-20">Id.</th>
+                        <th class="px-4 py-2">Fecha</th>
+                        <th class="px-4 py-2">Nombre</th>
+                        <th class="px-4 py-2">Identificacion</th>
+                        <th class="px-4 py-2">Correo</th>
+                        <th class="px-4 py-2">Cantidad</th>
+                        <th class="px-4 py-2">Servicio</th>
+                        <th class="px-4 py-2">Zona</th>
+                        <th class="px-4 py-2">Accion</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        @if($sales !== null)
+                            @foreach($sales as $sale)
+                                <tr>
+                                    <td class="border px-4 py-2">{{ $sale->id }}</td>
+                                    <td class="border px-4 py-2">{{ $sale->date }}</td>
+                                    <td class="border px-4 py-2">{{ $sale->name }}</td>
+                                    <td class="border px-4 py-2">{{ $sale->identification }}</td>
+                                    <td class="border px-4 py-2">{{ $sale->email }}</td>
+                                    <td class="border px-4 py-2">{{ $sale->quantity }}</td>
+                                    <td class="border px-4 py-2">{{ $sale->service->name }}</td>
+                                    <td class="border px-4 py-2">{{ auth()->user()->zone->name }}</td>
+
+                                    <td class="border px-4 py-2">
+                                        <button wire:click="edit({{ $sale->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Editar</button>
+                                        @if(auth()->user()->hasRoles(['administrador']))
+                                            <button wire:click="delete({{ $sale->id }})" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Eliminar</button>
+                                        @endif
+                                        @if(auth()->user()->hasRoles(['consultor']))
+                                            <a href="{{ route('invoice_pdf', ['id' => $sale->id, 'email' => $sale->email, 'name' => $sale->name]) }}" target="_blank" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Generar PDF</a>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <div class="rounded-md shadow-sm mt-1 block w-full text-gray-500 text-center">
+                                No hay ventas asociadas para mostrar.
+                            </div>
+                        @endif
+                    </tbody>
+                @else
+                    <div class="rounded-md shadow-sm mt-1 block w-full text-gray-500 text-center">
+                        No hay resultados para la búsqueda "{{$search}}" en la pagina {{$page}} al mostrar {{$perPage}} por página.
+                    </div>
+                @endif
             </table>
+                <div class="rounded-md shadow-sm mt-1 block w-full">
+                    {!! $sales->links() !!}
+                </div>
         </div>
     </div>
 </div>

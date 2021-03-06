@@ -19,12 +19,12 @@
                         </div>
                         <div class="mb-4">
                             <label for="exampleFormControlInput2" class="block text-gray-700 text-sm font-bold mb-2">Correo electrónico:</label>
-                            <input type="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exampleFormControlInput2" wire:model="email" placeholder="Email">
+                            <input disabled type="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exampleFormControlInput2" wire:model="email" placeholder="Email">
                             @error('email') <span class="text-red-500">{{ $message }}</span>@enderror
                         </div>
                         <div class="mb-4">
                             <label for="exampleFormControlInput2" class="block text-gray-700 text-sm font-bold mb-2">Cedula:</label>
-                            <input type="number" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exampleFormControlInput2" wire:model="identification" placeholder="Cedula">
+                            <input disabled type="number" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exampleFormControlInput2" wire:model="identification" placeholder="Cedula">
                             @error('identification') <span class="text-red-500">{{ $message }}</span>@enderror
                         </div>
                         <div class="mb-4">
@@ -33,9 +33,9 @@
                             @error('phone') <span class="text-red-500">{{ $message }}</span>@enderror
                         </div>
 
-                        <div class="mb-4">
+                        <div hidden class="mb-4">
                             <label for="exampleFormControlInput2" class="block text-gray-700 text-sm font-bold mb-2">Contraseña:</label>
-                            <input type="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exampleFormControlInput2" wire:model="password" placeholder="Password">
+                            <input disabled type="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exampleFormControlInput2" wire:model="password" placeholder="Password">
                             @error('password') <span class="text-red-500">{{ $message }}</span>@enderror
                         </div>
 
@@ -46,6 +46,18 @@
                                     <option value='zone_id'>Opciones</option>
                                     @foreach($zones as $zone)
                                         <option value={{ $zone->id }}>{{ $zone->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="mb-8">
+                                <label class="inline-block w-32 font-bold">Rol:</label>
+                                <select name="role_id" wire:model="role_id" class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none" required>
+                                    <option value='role_id'>Asignar Rol:</option>
+                                    @foreach($roles as $role)
+                                        <option value={{ $role->id }}>{{ $role->display_name }}</option>
                                     @endforeach
                                 </select>
                             </div>

@@ -18,7 +18,11 @@ class Sale extends Model
 
     public function salesUsers() {
         return $this->belongsToMany(User::class, 'sale_user')
-            ->withPivot('total');
+            ->withPivot('total')
+            ->withPivot('description')
+            ->withPivot('sale_id')
+            ->withPivot('user_id')
+            ->withTimestamps();
     }
 
 }

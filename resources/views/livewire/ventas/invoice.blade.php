@@ -23,63 +23,61 @@
             @if(array($sales))
                 @foreach($sales as $sale)
                     <thead>
-                    <tr>
-                        <th scope="col">Cliente</th>
-                        <th scope="row">{{ $sale->name }}</th>
-                    </tr>
+                        <tr>
+                            <th scope="col">Cliente</th>
+                            <th scope="row">{{ $sale->name }}</th>
+                        </tr>
                     </thead>
                     <tbody>
+                        <tr>
+                            <td>C.C </td>
+                            <td>{{ $sale->identification }}</td>
+                        </tr>
 
-                    <tr>
-                        <td>C.C </td>
-                        <td>{{ $sale->identification }}</td>
-                    </tr>
+                        <tr>
+                            <td>Correo: </td>
+                            <td>{{ $sale->email }}</td>
+                        </tr>
 
-                    <tr>
-                        <td>Correo: </td>
-                        <td>{{ $sale->email }}</td>
-                    </tr>
+                        <tr>
+                            <td>Fecha: </td>
+                            <td>{{ $sale->date }}</td>
+                        </tr>
 
-                    <tr>
-                        <td>Fecha: </td>
-                        <td>{{ $sale->date }}</td>
-                    </tr>
+                        <tr>
+                            <td>Ciudad:</td>
+                            <td>{{ auth()->user()->zone['name'] }}</td>
+                        </tr>
 
-                    <tr>
-                        <td>Ciudad:</td>
-                        <td>{{ auth()->user()->zone['name'] }}</td>
-                    </tr>
+                        <tr>
+                            <td>Nombre del vendedor:</td>
+                            <td>{{ auth()->user()->name }}</td>
+                        </tr>
 
-                    <tr>
-                        <td>Nombre del vendedor:</td>
-                        <td>{{ auth()->user()->name }}</td>
-                    </tr>
+                        <tr>
+                            <td>Codigo: </td>
+                            <td>{{ str_pad($sale->id, 7, 0, STR_PAD_LEFT) }}</td>
+                        </tr>
 
-                    <tr>
-                        <td>Codigo: </td>
-                        <td>{{ $sale->id }}</td>
-                    </tr>
+                        <tr>
+                            <td>Descripcion: </td>
+                            <td>{{ $sale->pivot->description }}</td>
+                        </tr>
 
-                    <tr>
-                        <td>Descripcion: </td>
-                        <td>{{ $sale->pivot->description }}</td>
-                    </tr>
+                        <tr>
+                            <td>Cantidad: </td>
+                            <td>{{ $sale->quantity }}</td>
+                        </tr>
 
-                    <tr>
-                        <td>Cantidad: </td>
-                        <td>{{ $sale->quantity }}</td>
-                    </tr>
+                        <tr>
+                            <td>Servicio:</td>
+                            <td>{{ $sale->service['name']}}</td>
+                        </tr>
 
-                    <tr>
-                        <td>Servicio:</td>
-                        <td>{{ $sale->service['name']}}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Total:</td>
-                        <td>${{ $sale->pivot->total }}.000</td>
-                    </tr>
-
+                        <tr>
+                            <td>Total:</td>
+                            <td>${{ number_format($sale->pivot->total, 3) }}</td>
+                        </tr>
                     </tbody>
                 @endforeach
             @else

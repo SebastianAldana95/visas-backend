@@ -24,10 +24,10 @@ class SaleFactory extends Factory
         return [
             'date' => $this->faker->date(),
             'name' => $this->faker->name,
-            'identification' => $this->faker->uuid,
+            'identification' => $this->faker->company,
             'email' => $this->faker->unique()->safeEmail,
             'quantity' => rand(1, 8),
-            'service_id' => rand(1, 5)
+            'service_id' => rand(1, 5),
         ];
     }
 }

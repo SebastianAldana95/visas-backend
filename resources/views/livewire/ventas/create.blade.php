@@ -14,27 +14,27 @@
                     <div class="">
                         <div class="mb-4">
                             <label for="exampleFormControlInput1" class="block text-gray-700 text-sm font-bold mb-2">Fecha:</label>
-                            <input type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exampleFormControlInput1" placeholder="Fecha" wire:model="date">
+                            <input type="date" min={{ date('Y-m-d') }} class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exampleFormControlInput1" placeholder="Fecha" wire:model="date">
                             @error('date') <span class="text-red-500">{{ $message }}</span>@enderror
                         </div>
                         <div class="mb-4">
                             <label for="exampleFormControlInput2" class="block text-gray-700 text-sm font-bold mb-2">Nombre:</label>
-                            <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exampleFormControlInput2" wire:model="name" placeholder="Nombre"></textarea>
+                            <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exampleFormControlInput2" wire:model="name" placeholder="Nombre"></input>
                             @error('name') <span class="text-red-500">{{ $message }}</span>@enderror
                         </div>
                         <div class="mb-4">
                             <label for="exampleFormControlInput2" class="block text-gray-700 text-sm font-bold mb-2">Cedula:</label>
-                            <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exampleFormControlInput2" wire:model="identification" placeholder="Cedula"></textarea>
+                            <input type="number" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exampleFormControlInput2" wire:model="identification" placeholder="Cedula"></input>
                             @error('identification') <span class="text-red-500">{{ $message }}</span>@enderror
                         </div>
                         <div class="mb-4">
                             <label for="exampleFormControlInput2" class="block text-gray-700 text-sm font-bold mb-2">Correo:</label>
-                            <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exampleFormControlInput2" wire:model="email" placeholder="Correo Electronico"></textarea>
+                            <input type="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exampleFormControlInput2" wire:model="email" placeholder="Correo Electronico"></input>
                             @error('email') <span class="text-red-500">{{ $message }}</span>@enderror
                         </div>
                         <div class="mb-4">
                             <label for="exampleFormControlInput2" class="block text-gray-700 text-sm font-bold mb-2">Cantidad:</label>
-                            <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exampleFormControlInput2" wire:model="quantity" placeholder="Cantidad"></textarea>
+                            <input type="number" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exampleFormControlInput2" wire:model="quantity" placeholder="Cantidad"></input>
                             @error('quantity') <span class="text-red-500">{{ $message }}</span>@enderror
                         </div>
                         <div class="mb-4">
@@ -43,12 +43,17 @@
                                 <select name="service_id" wire:model="service_id" class="border rounded shadow p-2 bg-white" required>
                                     <option value='service_id'>Seleccione un servicio</option>
                                     @foreach($services as $service)
-                                        <option value={{ $service->id }}>{{ $service->name }}</option>
+                                        <option class="border rounded shadow p-2 bg-white" value={{ $service->id }}>{{ $service->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
-                        <!--Colocar los demas campos del formulario-->
+
+                        <div class="mb-4">
+                            <label for="exampleFormControlInput2" class="block text-gray-700 text-sm font-bold mb-2">Descripcion:</label>
+                            <textarea type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exampleFormControlInput2" wire:model="description" placeholder="Descripcion Comprobante"></textarea>
+                            @error('description') <span class="text-red-500">{{ $message }}</span>@enderror
+                        </div>
                     </div>
                 </div>
 

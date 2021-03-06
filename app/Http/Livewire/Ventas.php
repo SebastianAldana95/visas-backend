@@ -6,22 +6,47 @@ use App\Models\Sale;
 use App\Models\Service;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Ventas extends Component
 {
-    public $sales, $date, $name, $identification, $email, $quantity, $service_id, $sale_id;
+    use WithPagination;
+
+    protected $queryString = [
+        'search' => ['except' => ''],
+        'perPage' => ['except' => '5']];
+
+    public $date, $name, $identification, $email, $quantity, $service_id, $sale_id;
+    public $description;
     public $isOpen = 0;
     public $zone;
-    public $services=[];
+    public $services;
     public $total=0;
+    public $search = '';
+    public $perPage = '5';
 
     public function render()
     {
-        // $this->sales = Sale::with(['salesUsers', 'service'])->get();
-        $this->sales = Auth::user()->sales()->get();
-        $this->zone = Auth::user()->zone()->get()->first();
+        $sales = Sale::whereHas('service', function ($query) {
+            $query->where('name', 'LIKE', "%{$this->search}%");
+        })
+            ->orWhere('name', 'LIKE', "%{$this->search}%")
+            ->orWhere('date', 'LIKE', "%{$this->search}%")
+            ->orWhere('identification', 'LIKE', "%{$this->search}%")
+            ->orWhere('email', 'LIKE', "%{$this->search}%")
+            ->latest()
+            ->paginate($this->perPage);
         $this->services = Service::all();
-        return view('livewire.ventas.ventas');
+
+        return view('livewire.ventas.ventas', ['sales' => $sales]);
+
+    }
+
+    public function clear()
+    {
+        $this->search = '';
+        $this->page = 1;
+        $this->perPage = '5';
     }
 
     public function create()
@@ -71,7 +96,7 @@ class Ventas extends Component
         ]);
         // $sale->salesUsers()->sync(auth()->user()->getAuthIdentifier());
         $this->total = $sale->quantity * $sale->service['price'];
-        $sale->salesUsers()->attach(auth()->user()->getAuthIdentifier(), ['total' => $this->total]);
+        $sale->salesUsers()->attach(auth()->user()->getAuthIdentifier(), ['total' => $this->total, 'description' => $this->description]);
 
         session()->flash('message',
             $this->sale_id ? 'Venta actualizada correctamente' : 'Venta Creada Correctamente.');
