@@ -4,17 +4,34 @@ namespace App\Http\Livewire;
 
 use App\Models\Zone;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Zonas extends Component
 {
+    use WithPagination;
 
-    public $zones, $name, $zone_id;
+    protected $queryString = [
+        'search' => ['except' => ''],
+        'perPage' => ['except' => '5']];
+
+    public $name, $zone_id;
     public $isOpen = 0;
+    public $search = '';
+    public $perPage = '5';
 
     public function render()
     {
-        $this->zones = Zone::all();
-        return view('livewire.zonas.zonas');
+        $zones = Zone::where('name', 'LIKE', "%{$this->search}%")
+            ->latest()
+            ->paginate($this->perPage);
+        return view('livewire.zonas.zonas', ['zones' => $zones]);
+    }
+
+    public function clear()
+    {
+        $this->search = '';
+        $this->page = 1;
+        $this->perPage = '5';
     }
 
     public function create()

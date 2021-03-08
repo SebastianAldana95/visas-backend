@@ -31,6 +31,7 @@ class User extends Authenticatable
         'phone',
         'password',
         'zone_id',
+        'role_id',
     ];
 
     /**
@@ -63,19 +64,33 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    /*public function sales(){
-        return $this->belongsToMany(Sale::class);
-    }*/
-
     public function zone() {
         return $this->belongsTo(Zone::class);
     }
 
     public function sales() {
         return $this->belongsToMany(Sale::class, 'sale_user')
-            ->withPivot(['user_id'])
+            ->withPivot('sale_id')
+            ->withPivot('user_id')
             ->withPivot('total')
             ->withPivot('description');
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function hasRoles(array $roles)
+    {
+        foreach ($roles as $role)
+        {
+            if ($this->role->name === $role)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

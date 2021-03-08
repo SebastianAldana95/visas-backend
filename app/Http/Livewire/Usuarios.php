@@ -2,25 +2,53 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Role;
 use App\Models\User;
 use App\Models\Zone;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class Usuarios extends Component
 {
+
     use WithPagination;
 
-    public  $usuarios, $name, $email, $identification, $phone, $password, $zone_id, $user_id;
+    protected $queryString = [
+        'search' => ['except' => ''],
+        'perPage' => ['except' => '5']];
+
+    public $name, $email, $identification, $phone, $password, $zone_id, $user_id, $role_id;
     public $isOpen = 0;
-    public $zones=[];
+    public $search = '';
+    public $perPage = '5';
+    public $zones;
+    public $roles;
 
     public function render()
     {
-        $this->usuarios = User::with('zone')->get();
-        return view('livewire.usuarios.usuarios');
+        $users = User::whereHas('zone', function ($query) {
+            $query->where('name', 'LIKE', "%{$this->search}%");
+        })
+            ->orWhere('name', 'LIKE', "%{$this->search}%")
+            ->orWhere('identification', 'LIKE', "%{$this->search}%")
+            ->orWhere('phone', 'LIKE', "%{$this->search}%")
+            ->orWhere('email', 'LIKE', "%{$this->search}%")
+            ->with('zone')
+            ->with('role')
+            ->latest()
+            ->paginate($this->perPage);
+        $this->zones = Zone::all();
+        $this->roles = Role::all();
+        return view('livewire.usuarios.usuarios', ['users' => $users]);
+    }
+
+    public function clear()
+    {
+        $this->search = '';
+        $this->page = 1;
+        $this->perPage = '5';
     }
 
     public function create()
@@ -47,26 +75,23 @@ class Usuarios extends Component
         $this->password = '';
         $this->zone_id = '';
         $this->user_id = '';
+        $this->role_id = '';
     }
 
     public function store()
     {
         $this->validate([
             'name' => 'required',
-            'email' => 'required|email',
-            'identification' => 'required',
             'phone' => 'required',
-            'password' => 'required|password',
-            'zone_id' => 'required'
+            'zone_id' => 'required',
+            'role_id' => 'required'
         ]);
 
         User::updateOrCreate(['id' => $this->user_id], [
             'name' => $this->name,
-            'email' => $this->email,
-            'identification' => $this->identification,
             'phone' => $this->phone,
-            'password' => Hash::make($this->password),
             'zone_id' => $this->zone_id,
+            'role_id' => $this->role_id,
         ]);
 
         session()->flash('message',
@@ -86,6 +111,7 @@ class Usuarios extends Component
         $this->email = $user->email;
         $this->identification = $user->identification;
         $this->phone = $user->phone;
+        $this->password = $user->password;
         $this->zone_id = $user->zone_id;
 
         $this->openModal();

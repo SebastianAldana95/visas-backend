@@ -25,7 +25,7 @@
                                 <label for="exampleFormControlInput2" class="block text-gray-700 text-sm font-bold mb-2">Precio:</label>
                                 <div>
                                     <span class="input-group-text">$</span>
-                                    <input type="text" class="shadow appearance-none border rounded" wire:model="price" aria-label="Amount (to the nearest dollar)">
+                                    <input type="number" class="shadow appearance-none border rounded" wire:model="price">
                                     @error('price') <span class="text-red-500">{{ $message }}</span>@enderror
                                     <span class="input-group-text">.000</span>
                                 </div>
@@ -35,15 +35,29 @@
 
                    <div class="">
                        <div class="mb-4">
-                           <div class="input-group">
-                               <label for="exampleFormControlInput2" class="block text-gray-700 text-sm font-bold mb-2">Comision:</label>
-                               <div>
-                                   <span class="input-group-text">$</span>
-                                   <input type="text" class="shadow appearance-none border rounded" wire:model="commission" aria-label="Amount (to the nearest dollar)">
-                                   @error('commission') <span class="text-red-500">{{ $message }}</span>@enderror
-                                   <span class="input-group-text">.000</span>
+                           @if(auth()->user()->hasRoles(['consultor']))
+                               <div hidden class="input-group">
+                                   <label for="exampleFormControlInput2" class="block text-gray-700 text-sm font-bold mb-2">Comision:</label>
+                                   <div>
+                                       <span class="input-group-text">$</span>
+
+                                           <input hidden type="number" class="shadow appearance-none border rounded" wire:model="commission" aria-label="Amount (to the nearest dollar)">
+                                           @error('commission') <span class="text-red-500">{{ $message }}</span>@enderror
+                                           <span class="input-group-text">.000</span>
+                                   </div>
                                </div>
-                           </div>
+                           @else
+                               <div class="input-group">
+                                   <label for="exampleFormControlInput2" class="block text-gray-700 text-sm font-bold mb-2">Comision:</label>
+                                   <div>
+                                       <span class="input-group-text">$</span>
+
+                                       <input type="number" class="shadow appearance-none border rounded" wire:model="commission" aria-label="Amount (to the nearest dollar)">
+                                       @error('commission') <span class="text-red-500">{{ $message }}</span>@enderror
+                                       <span class="input-group-text">.000</span>
+                                   </div>
+                               </div>
+                           @endif
                        </div>
                    </div>
 
