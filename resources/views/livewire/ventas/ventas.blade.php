@@ -77,7 +77,7 @@
                                         @endif
                                         @if(auth()->user()->hasRoles(['consultor']))
                                                 <button wire:click="edit({{ $sale->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Editar</button>
-                                            <a href="{{ route('invoice_pdf', ['id' => $sale->id, 'email' => $sale->email, 'name' => $sale->name]) }}" target="_blank" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Generar PDF</a>
+                                            <a href="{{ route('invoice_pdf', ['id' => $sale->id, 'email' => $sale->email, 'name' => $sale->name]) }}" target="_blank" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"> Gen. PDF</a>
                                         @endif
                                     </td>
                                 </tr>

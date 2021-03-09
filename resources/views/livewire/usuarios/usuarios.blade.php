@@ -64,7 +64,7 @@
                                                 <button wire:click="edit({{ $user->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Editar</button>
                                                 <button wire:click="delete({{ $user->id }})" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Eliminar</button>
                                                 @if($user->role->name === 'consultor')
-                                                    <a href="{{ route('detail_sale_user_pdf',$user->id )}}" target="_blank" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Ver Reporte</a>
+                                                    <a href="{{ route('detail_sale_user_pdf',$user->id )}}" target="_blank" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Reporte</a>
                                                 @endif
                                             </td>
                                         </tr>

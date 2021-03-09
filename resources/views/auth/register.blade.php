@@ -31,12 +31,12 @@
 
             <div class="mt-4">
                 <x-jet-label for="zone_id" value="{{ __('Zona') }}" />
-                <select name="zone_id" id="zone_id" class="form-select" aria-label="Default select example" required>
+                <select name="zone_id" id="zone_id" class="form-select border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none" aria-label="Default select example" required>
                     <option selected>Seleccione una zona</option>
-                    <option value="1">Bogota</option>
-                    <option value="2">Medellin</option>
-                    <option value="3">Pereira</option>
-                    <option value="4">Santander</option>
+                    <option value="1">Regional Centro</option>
+                    <option value="2">Regional Antioquia y eje cafetero</option>
+                    <option value="3">Regional costa norte</option>
+                    <option value="4">Regional sur</option>
                 </select>
             </div>
 

@@ -53,6 +53,7 @@ class Ventas extends Component
                 })
                 ->latest()
                 ->paginate($this->perPage);
+                $this->services = Service::all();
             return view('livewire.ventas.ventas', ['sales' => $sales]);
         }
 
